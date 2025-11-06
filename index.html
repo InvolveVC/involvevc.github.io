@@ -1,2 +1,221 @@
-<h1>Welcome</h1>
-<p>This is the host site.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SQOD Agent Troubleshooting Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --brand:#080A52; --pink:#F3185E; --bg:#F3F4FD; --card:#fff; }
+  body{ margin:0; background:var(--bg); font-family:'Poppins',sans-serif; color:var(--brand);
+        display:flex; justify-content:center; padding:32px 0; }.card{ position:relative; width:70%; max-width:860px; min-height:78vh; background:#fff; border-radius:20px;
+          padding:28px 32px 92px; box-shadow:0 10px 32px rgba(8,10,82,0.10); display:flex; align-items:center; }.content{ max-width:740px; margin:0 auto; text-align:center; }.answer .content{ text-align:left; font-size:1.12rem; line-height:1.72; max-width:660px; }
+  h1{ font-size:1.74rem; margin:0 0 18px; font-weight:600; }.btns{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:50px; }.btn{ background:var(--pink); color:#fff; border:none; padding:12px 18px; border-radius:10px; cursor:pointer; font-size:1rem; min-width:140px; }.logo-top{ position:absolute; top:20px; right:20px; max-width:140px; }.logo-bottom{ position:absolute; bottom:20px; left:20px; max-width:64px; opacity:0.9; }.footer-icons{ position:absolute; bottom:20px; right:20px; display:flex; gap:20px; }.icon-btn{ background:none; border:none; font-size:1.7rem; cursor:pointer; color:var(--brand); }
+  a{ color:var(--pink); text-decoration:underline; }
+  .answer-text{ max-width:660px; margin:0 auto;  text-align:left; }
+.card { min-height: 70vh; padding: 50px 32px 80px; }
+.card.dynamic { min-height: auto; height: auto; padding: 84px 50px 120px; }
+.card.dynamic .answer-text { max-width: 860px; margin: 0 auto; line-height: 1.7; }
+ .note-small{ color:var(--pink); font-style:italic; font-size:1.1rem; font-weight:400; display:block; margintop:6px; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <img src="https://sqod.co.uk/wp-content/uploads/2023/12/Website-logo.png" class="logo-top" alt="SQOD Logo">
+  <img src="https://image2url.com/images/1758213276143-551a04d5-a8d3-4f70-850f-39735d380209.jpg" class="logo-bottom" alt="Decorative">
+  <div class="content" id="content"></div>
+  <div class="footer-icons">
+    <button class="icon-btn" title="Back" onclick="goBack()">&#8592;</button>
+    <button class="icon-btn" title="Restart" onclick="resetGuide()">&#8634;</button>
+  </div>
+</div>
+
+<script>
+const SLIDES = {
+  "W1": {type:"q", text:`Welcome to SQOD's interactive troubleshooting guide for Agents and Admins.<br><span class="note-small">Please click below to continue.</span>`, buttons:[{label:"Continue", next:"W2"}]},
+  "W2": {type:"q", text:`"Who is experiencing the issue?"`, buttons:[{label:"Me", next:"C1"}, {label:"The client", next:"P1"}]},
+  "P1": {type:"q", text:`"Has the client successfully joined the video consultation?"`, buttons:[{label:"Yes", next:"P2"}, {label:"No", next:"P1AA"}]},
+  "P1A": {type:"q", text:`"Is the client showing as "Waiting to be seen" on your SQOD webpage?"`, buttons:[{label:"Yes", next:"P1AA"}, {label:"No", next:"P1AAAA"}]},
+  "P1AA": {type:"q", text:`"Has the client advised they have joined the consultation, but they cannot see you within the call?"`, buttons:[{label:"Yes", next:"P1AAA"}, {label:"No", next:"PA1"}]},
+  "P1AAA": {type:"a", text:`"With all SQOD video consultations, you as the service provider will enter the call <b>before</b> your client proceeds. If your client has advised that they have joined a consultation, but they cannot see anyone else as attending, there may be an issue with the invite link used or connection to the platform.<br><br>Please ask your client to attempt re-joining via their <b>originial invite link</b>, or alternatively you can reshare the link in-platform by pressing the "Invite" icon on the desired waiting room or scheduled call."
+`},
+  "P1AAAA": {type:"a", text:`"If your client is not showing as "Waiting to be seen", then they have not finished the joining process to attend their consultation.<br><br><b>Please advise them of the following steps:</b><br>1. The first webpage will display the appointment or waiting room details, select "<b>Continue</b>"<br>2. The client confirms or enters their personal details, then select "Continue"<br>3. The final page will allow the client the option to change their details, or select "<b>Join</b>" to proceed to wait to be seen.<br><br>Alternatively visual aides of the client joining process are available on the SQOD resource centre, <a href="https://resources.sqod.co.uk/article/62-caller-information-leaflet" target="_blank" rel="noopener">here.</a>"
+`},
+  "PA1": {type:"a", text:`"If your client is unable to successfully enter the consultation please try the following steps:<br><br>1. <b>Re-send or confirm the consultation link:</b> If they are not using the correct link or are unable to access it, you can re-send it via SQOD's in-platform messaging or by copying and sharing the link.<br>2. <b>Ask if they have confirmed their details:</b> When joining a consultation, the client will have the opportunity to review their details before proceeding to wait to be seen. It is important that the client clicks "Confirm details" as they will not progress to the next page without doing so. Please be advised they may need to scroll down on their device to access the button.<br>3. <b>Check their device <b>permissions</b>:</b> When you start the consultation, the client will progress to the next page and will be prompted to accept microphone and camera permissions. Once they've done so, they will have to choose to skip or run device tests before proceeding into the consultation. If a client successfully accessed the Waiting Room/Scheduled Call but didn't progress through once you started the consultation, this would be the likely reason. Please ask the client to scroll on their page and confirm there are no buttons to press or outstanding actions.<br><br>If your client is still experiencing issues, please advise them to attempt re-joining on another device or method of internet access, or advise that they complete our self-service trouble-shooter for clients available <a href="https://resources.sqod.co.uk/article/76-troubleshooting-guide" target="_blank" rel="noopener">here</a>. "
+`},
+  "P2": {type:"q", text:`"Is their issue camera or microphone related?"`, buttons:[{label:"Yes", next:"P3"}, {label:"No", next:"P4"}]},
+  "P3": {type:"q", text:`"Is the issue with their own camera and microphone, or yours?"`, buttons:[{label:"Their own", next:"PA3"}, {label:"Mine", next:"PA2"}]},
+  "PA2": {type:"a", text:`"If your client is experiencing issues with your visual and audio feed, such as it lagging or buffering, it may be that your internet connection is unstable or poor. You can check your internet connection in-platform via the <b>Meeting Diagnostics</b>, signified by 3 bars in the top right corner of the consultation window, or by using an internet speed tester such as <a href="https://speedtest.net" target="_blank" rel="noopener">speedtest.net</a>.<br><br>If you are unable to change your internet connection, you can toggle on "<b>Low Data Mode</b>" within the consultation via the settings cog in the top right corner of the call window. This reduces the strain on your internet connection, helping to alleviate bandwidth issues."
+`},
+  "PA3": {type:"a", text:`"If your client is experiencing issues with their camera and microphone, first confirm whether they accepted their device permissions when the call started. If they have already done so, there's a number of solutions you can advise:<br><br>1. <b>Confirm the camera and microphone are not muted:</b> If a client has their device muted or turned off, it will be signified on your call screen by orange mute icons next to their name. Kindly requested that the client un-mute their microphone and camera by clicking the respective device icons at the bottom of their call window.<br>2. <b>Close all other applications and tabs:</b> If the camera/microphone were previously being used by another application, closing all open windows and refreshing the browser can help to reset the device permissions.<br>3. <b>Check the internet connection:</b> If there are persistent issues with audio and camera quality, insufficient internet speed may be the issue. The client can check their internet connection in-platform via the <b>Meeting Diagnostics</b>, signified by 3 bars in the top right corner of the consultation window, or by using an internet speed tester such as <a href="https://speedtest.net" target="_blank" rel="noopener">speedtest.net</a>.  If the internet speed is insufficient or poor, please advise they switch to an alternative network.<br>4. <b>Re-join the consultation:</b> If the above steps do not work, advise the client to restart their device and re-join their consultation via the original <b>invite</b> link. <br><br>If the client is still experiencing issues, please advise them to attempt re-joining on another device or clearing their browser cache. We have a step-by-step guide on how to do this, <a href="https://resources.sqod.co.uk/article/54-clearing-your-cache" target="_blank" rel="noopener">here</a>."
+`},
+  "P4": {type:"a", text:`"If your client has successfully joined the consultation and their issue is not audio visual related, please advise that they complete our self-service troubleshooting for clients available <a href="https://resources.sqod.co.uk/article/76-troubleshooting-guide" target="_blank" rel="noopener">here</a>.<br><br>Alternatively, if your client is experiencing an issue not covered in this guide or our resource centre, please contact us at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>. and our technical support team would be happy to assist you."
+`},
+  "C1": {type:"q", text:`"Please select the topic that most closely matches your query."`, buttons:[{label:"Admin actions", next:"C3"}, {label:"Live calls", next:"C4"}, {label:"Logging in", next:"C5"}, {label:"Sharing invites", next:"C6"}, {label:"Other", next:"C70"}]}, 
+"C70": {type:"q", text:`"Please select the topic that most closely matches your query."`, buttons:[{label:"Messaging", next:"C72"}, {label:"Scheduled calls", next:"C73"}, {label:"Video backgrounds", next:"C74"}, {label:"Waiting rooms", next:"C75"}, {label:"Other", next:"C7"}]},
+"C75": {type:"q", text:`"Which waiting room function are you querying?"`, buttons:[{label:"Arrival alerts", next:"C751"}, {label:"Post-call redirection", next:"C752"}, {label:"Hold music and videos", next:"C753"}]},
+  "C72": {type:"a", text:`With SQOD, you can send in-platform messages directly to your clients as they wait. Messages are one-way, and you are able to all previous messages sent that day. <br><br><b>Waiting rooms:</b> You can message the room as a group, for example to say the service is running 10 minutes behind, by selecting the "Message" icon on the waiting room tile. To message an individual client, select "People in this room". From here you can select the "Message" icon next to the desired client.<br><b>Scheduled calls:</b> Once the client has arrived and is waiting to be seen, the "Messages" icon will appear on their tile.<br><br>If you would like additional training please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.
+`},
+  "C73": {type:"a", text:`<b>Scheduled calls</b> allow you to create a fixed-time appointment for a future date. Unlike waiting rooms, the appointment link is a unique, one-time use web address. <br><br> The call diary is <b>shared</b> across your organisation or department, making it easy to view upcoming appointments or assist colleague with their consultations. <br> To <b>reschedule</b> an appointment, select the "Edit" icon then update the date and time to the desire values. Once you save the appointment, your client will automatically be sent an update. Similarly, if you <b>cancel</b> an appointment, your client will also be updated via email.<br><br>If you would like additional training please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.
+`},
+  "C74": {type:"a", text:`With SQOD, you have the option to choose from a <b>selection of backgrounds</b> for your live consultation, or to <b>upload your own.</b><br><br>Your background settings can be updated during the live-call through hovering over the camera icon along the bottom dash, then selecting "Background settings" or via the settings cog in the top right corner.
+`},
+  "C751": {type:"a", text:`When a client has entered a waiting room, you will receive an <b>audio and visual alert</b> within your SQOD page. By selecting the bell icon along the top dash, you can also view previous client notifications such as the name and arrival time.<br><br>If you are working on multiple systems, a useful feature is <b>caller arrival alerts.</b> After selecting the edit icon  on the desired waiting room, you will have the option to enter a <b>mobile number</b> and the number of minutes after which you would like to be alerted. This will send a text message advising that a client has arrived and is waiting to be seen.<br><br>This is particularly useful when using <b>softphone systems</b> such as Genesys, as the alert will appear as an incoming interaction.`},
+  "C752": {type:"a", text:`With SQOD consultations, you can set a custom webpage for your clients to be <b>automatically re-directed</b> to once their call ends.<br><br>To do so, select the edit icon on the desired waiting room then scroll down to the <b>"Re-directs"</b> section. From here you can enter the link to an external webpage to use as a custom post-call screen, and you have the ability to enter different links for Agents and Clients.<br><br>A popular use for this is to capture <b>post-call feedback</b> via a form or to share an informative video.`},
+  "C7521": {type:"a", text:`With SQOD consultations, you can set a custom webpage for your clients to be <b>automatically re-directed</b> to once their call ends.<br><br><b>Waiting rooms:</b>Select the edit icon on the desired waiting room then scroll down to the "Re-directs" section.<br><b>Scheduled appointments:</b>On the appropriate tab, select "Schedule a new call", then scroll down to the "Redirects" section.<br><br>From here you can enter the link to an external webpage to use as a custom post-call screen, and you have the option to enter different links for Agents and Clients. A popular use for this is to capture <b>post-call feedback</b> via a form or to share an informative video.<br><br>If you have further queries regarding post-call redirects or would like additional training on your administrator privileges please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.`},
+  "C753": {type:"a", text:`For the <b>best client experience</b> when using SOQD, we recommend adding hold music or an informative video to your waiting rooms.<br><br>This can be customised individually per waiting room by selecting the edit icon, then scroll down to the <b>"Theming"</b> tab along the bottom menu. From here you can enter the link to the desired files, and it will play automatically once the client joins the waiting room.<br><b>Both</b> hold music and a video can be applied to a waiting room at the same time, and clients have the option to mute the music whilst they wait.<br><br>If you have further queries or would like additional training please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.`},
+  "C3": {type:"q", text:`"Which administrator privilege are you querying?"`, buttons:[{label:"Audit logs", next:"C30"}, {label:"Consultation recordings", next:"C31"}, {label:"Departments", next:"C32"}, {label:"Licenses and permissions", next:"C33"}, {label:"Post-call redirection", next:"C7521"}, {label:"Reporting", next:"C34"}, {label:"Site customisation", next:"C35"}]},
+  "C30": {type:"a", text:`"As an administrator, you will be able to access activity agent logs via the admin portal. To access the portal, please select <b>"Switch to Admin"</b> at the top of the page when logged into your SQOD account. Once on the portal, select "<b>Audit Logs</b>" under the menu on the left side of the page.<br><br>This will provide a list of recent activity in chronological order, you can filter the log by action type via the filter icon or view an action in more detail by selecting the eye icon.<br><br>If you have further queries regarding audit log data or would like additional training on your administrator privileges please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>."
+`},
+  "C31": {type:"a", text:`<b>Consultation recordings</b> are automatically stored for 30 days before deletion, you can access previous recordings under the <b>"Recording"</b> tab via the menu on the left. Alternatively we have a step-by-step access guide, available <a href="https://resources.sqod.co.uk/article/64-how-to-guide-access-recordings" target="_blank" rel="noopener">here</a>. <br><br>If you have further queries regarding consultation recording or would like additional training on your administrator privileges please contact our Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.
+`},
+  "C32": {type:"a", text:`"Should an organisation have multiple waiting rooms across a handful of business areas, SQOD can offer <b>reporting</b> at business area/department level.<br><br>For example, 'Occupational Health North' may have a Lung function Test room, Mental Health room and New Starter Assessment room. Reports can be produced for that specific department and no others, and you can assign a Department Administrator to take responsibility for a specific Department.<br>For a detailed how-to guide regarding departments, please visit our resource available <a href="https://resources.sqod.co.uk/article/24-how-to-guide-department-admin" target="_blank" rel="noopener">here</a>.<br><br>If you have further queries regarding Departments or would like additional training on your administrator privileges please contact our Customer Success team at <b><a href="mailto:mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>"
+`},
+  "C33": {type:"q", text:`"Which topic most closely matches your query?"`, buttons:[{label:"New users", next:"C331"}, {label:"Deleting users", next:"C332"}, {label:"User permissions", next:"C333"}]},
+  "C331": {type:"a", text:`"To create a new user on SQOD, open the <b>"Users"</b> tab from the menu on the left side of the admin portal. The admin portal can be accessed by selecting <b>"Switch to admin"</b> at the top of the page when logged into your SQOD account. <br><br>When on the Users tab, select the blue <b>"Create User"</b> button on the right then proceed to fill in the relevant details. Clicking create will generate a welcome email to be sent to the recipient, and will continue a <b>temporary password</b> that is valid for 7 days. You can resend this email email by searching for their name on the Users tab, selecting the three dots on the right of their account, and then choosing "Resend Email Verification".<br><br>If you are unsure how many available licenses your organisation has, please contact your Project Lead or the Customer Success team at <b><a href="mailto:customersuccess@sqod.co.uk">customersuccess@sqod.co.uk</a></b>.<br><br>Alternatively, if you are having technical difficulties with creating <b>new users</b>, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C332": {type:"a", text:`"To delete a user on SQOD, open the <b>"Users"</b> tab from the menu on the left side of the admin portal. The admin portal can be accessed by selecting "Switch to admin" at the top of the page when logged into your SQOD account. When on the Users tab, you have the option to temporarily or permanently delete the user. <br><br><b>Temporarily:</b> Select the trashcan icon on the right side of the user. To restore the user at a later date, select the filter icon on the top right then filter to "Only deleted". From here, find the desired user then select the restore icon signified by two arrows.<br> <b>Permanently: </b>Select the three dots on the right side of the user, then choose <b>"Fully Delete User</b>". If you wish to readd this user at a later date, you will have to do so as a new user from scratch.<br><br>If you are having technical difficulties with deleting and restoring users, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C333": {type:"a", text:`"You can add, remove, or edit <b>user <b>permissions</b></b> for each Waiting Room you have on SQOD. To do so, select the pencil icon on the desired waiting room then scroll towards the bottom of the page and choose <b>"Permissions"</b> on the right. From here you will be able to manage additional user and department permissions.<br><br>If you are having technical difficulties with user permissions or Waiting Room access, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C34": {type:"a", text:`"<b>Platform reporting</b> can be accessed via the <b>"Reporting"</b> tab along the tab dash bar when logged into your SQOD account. <br><br>From here, you can toggle between Scheduled Call and Waiting Room data, as well as choosing different date ranges. The graphs and table will auto-populate with the selected data and is representative of your organisation as a whole unless filtered by department. The raw data for your selected period can be exported by selecting "<b>Export as.CSV</b>" on the left of the page, this will generate a zip file to your email address.<br><br>Alternatively, if you have more bespoke reporting requirements that you which to discuss, please select <b>"Contact us"</b> at the bottom of the Reporting page."
+`},
+  "C35": {type:"a", text:`"A benefit of using SQOD, is that your video consultation service and website is <b>fully customisable!</b><br><br>For a detail how-to guide on all the available customisation options, please visit our resource available here.. To change <b>customisation settings</b> for an individual Waiting Room, you can do do so by selecting the pencil icon on the desired waiting room then scrolling towards the bottom of the page and navigating through the available tabs.<br><br>Alternatively, if you are having technical difficulties with customising your SQOD site or would like assistance, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>. <br>We are here to help you get the most out of your service with SQOD."
+`},
+  "C4": {type:"q", text:`"Which live call issue are you experiencing?"`, buttons:[{label:"Audio visual problems", next:"C2"}, {label:"Client connectivity", next:"C41"}, {label:"Group calls", next:"C42"}]},
+  "C41": {type:"a", text:`"If your client is experiencing issues joining their video consultation, we have a caller information leaflet with visual guides available on our <a href="https://resources.sqod.co.uk/article/62-caller-information-leaflet" target="_blank" rel="noopener">Resource Centre</a> <br><br>Alternatively, if they have joined the consultation but are experiencing other issues please direct them to our self-service troubleshooting available <a href="https://resources.sqod.co.uk/article/76-troubleshooting-guide" target="_blank" rel="noopener">here</a>." 
+`},
+  "C42": {type:"a", text:`"There are four ways in which you can conduct a consultation with multiple participants in SQOD.<br><br>1. <b>Creating a group call:</b> From the Waiting Room, you can select the tick box on the left side of the desired clients then press "<b>Start group call</b>" to begin a consultation with them.<br>2. <b>Add from the Waiting Room:</b> Whilst in a live consultation, you can invite a client in the Waiting Room into the call by switching to the SQOD tab on your browser and selecting the plus icon next to the client.<br>3. <b>Invite a 3rd party:</b> When in a live consultation, you can select the share icon on the top right to share access to that specific call. This can be done in-platform via our SMS and email invite feature, or by copying and sharing the unique link. Please note, if doing so we strongly recommend turning on the Room Lock within the call settings. This allows you to preview and approve those requesting to join the consultation, adding an additional layer of security for your client.<br>4. <b>Agent participation:</b> If you wish for a colleague with SQOD access to join you on a consultation, they can do so by logging into their SQOD account then joining the call from the correct Waiting Room or Scheduled call, by finding the client and selecting the handset icon.<br><br>If you are having technical difficulties with conducting <b>group calls</b>, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C2": {type:"q", text:`"Is the issue with your own audio visual feed, or theirs?"`, buttons:[{label:"Mine", next:"C2A"}, {label:"Theirs", next:"C2AA"}]},
+  "C2A": {type:"a", text:`"If you're experiencing issues with your microphone and camera, it may be due to the following reasons:<br><br><b>Device permissions:</b> If you're unable to turn on your microphone and camera, it may be due to your browsers device permissions. This can be managed via the lock icon on the left side of the URL bar on your web browser. If you have enabled device permissions but cannot produce any audio or visual feed at all, please check your microphone and camera are working through an online webcam tester or by recording a video within your device's camera application. <br><b>Internet connection:</b> If your microphone and camera are connected but experiencing quality issues, this may be due to your internet connectivity. You can check this via the "Meeting Diagnostics" cog in the top right of the call wonder, or test your connection speed at <a href="https://speedtest.net" target="_blank" rel="noopener">speedtest.net</a>.<br><b>Browser cache:</b> If you're still experiencing issues, please clear your browser cache. You can view our guide on how to do this, here. <br><b><b>Restart</b> your device:</b> If your device has been turned on for a long period, completely turning it off (as opposed to sleep mode) then turning the device back on can help to rectify any processing issues.<br><br>Alternatively, if the above solutions do not work please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C2AA": {type:"a", text:`If you're experiencing issues with the client's camera and microphone, first confirm whether they accepted their device permissions when the call started. If they have already done so, there's a number of solutions you can advise:<br><br>1. <b>Confirm the camera and microphone are not muted:</b> If a client has their device muted or turned off, it will be signified on your call screen by orange mute icons next to their name. Kindly requested that the client un-mute their microphone and camera by clicking the respective device icons at the bottom of their call window.<br>2. <b>Close all other applications and tabs:</b> If the camera/microphone were previously being used by another application, closing all open windows and refreshing the browser can help to reset the device permissions.<br>3. <b>Check the internet connection:</b> If there are persistent issues with audio and camera quality, insufficient internet speed may be the issue. The client can check their internet connection in-platform via the <b>Meeting Diagnostics</b>, signified by 3 bars in the top right corner of the consultation window, or by using an internet speed tester such as <a href="https://speedtest.net" target="_blank" rel="noopener">speedtest.net</a>.  If the internet speed is insufficient or poor, please advise they switch to an alternative network.<br>4. <b>Re-join the consultation:</b> If the above steps do not work, advise the client to restart their device and re-join their consultation via the original <b>invite</b> link. <br><br>You're still experiencing issues with their audio visual feed, please advise them to attempt re-joining on another device or clearing their browser cache. <br> We have a step-by-step guide on how to do this, <a href="https://resources.sqod.co.uk/article/54-clearing-your-cache" target="_blank" rel="noopener">here</a>. 
+`},
+  "C5": {type:"q", text:`"What log in issue are you experiencing?"`, buttons:[{label:"Password", next:"C51"}, {label:"Multi-factor authentication", next:"C52"}]},
+  "C51": {type:"a", text:`"If you are attempting to log in but SQOD advises your <b>password</b> is incorrect, please select the eye icon on the password box to view your password in plaintext. <br><br>Having additional blank spaces at the start or end of the password is a common problem, especially if copying the password over from your Welcome email.To reset your password, this can be done by selection the link on the log in page or by clicking on your name along the tab dashboard when logged in, then selecting <b>"Reset Password"</b>.<br><br>If you are still having technical difficulties with your password, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C52": {type:"a", text:`"A new 6 digit multi-faction authentication is required to be entered <b>each time you log in</b> to begin a session on SQOD.<br><br>If you no longer have access to, or would like to change your original authentication device, please contact your <b>Project Lead</b> or our Customer Support Team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C6": {type:"a", text:`"With in-platform SMS and email messaging, inviting clients to use your service is a quick and easy process! There's several ways in which an <b>invite</b> can be shared:<br><br><b>Scheduled appointments:</b> If booking a fixed-time consultation, your client will be sent an email/SMS confirmation at the point of booking creation. Once booked, you can also resend the invite or a reminder by finding the appointment on the "Scheduled" tab and selecting the "Invite" icon.<br><b>Waiting rooms:</b> To share the re-usable link to your waiting room, select the "Invite" icon on the desired room. You can choose to send an SMS or email invite in-platform with up to a 200 character message, or alternatively copy the link and attach it in your other communication or to your website.<br><b>Live call invite:</b> To invite a 3rd party directly into a specific live consultation, select the "Share" icon in the top right of the call window. From here you can send an invite via SMS or email, or choose to share the link directly.<br><br>If you are still having technical difficulties with service invites, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>."
+`},
+  "C7": {type:"a", text:`"If you are experiencing an issue not outlined by this guide, we have additional resources dedicated to Users, available on our <a href="https://resources.sqod.co.uk/category/4-support-guides" target="_blank" rel="noopener">Resource Centre</a>.<br><br>Alternatively, please contact our Customer Support team at <b><a href="mailto:customer.support@involve.vc">customer.support@involve.vc</a></b>.<br><br>We are here to help you get the most out of your service with SQOD."
+`}
+};
+
+function stripOuterQuotes(s){
+  if(!s) return s;
+  const t = s.trim();
+  if((t.startsWith('"') && t.endsWith('"')) || (t.startsWith('“') && t.endsWith('”'))) {
+    return t.slice(1, -1);
+  }
+  return s;
+}
+
+function linkifyBracketed(s){
+  if(!s) return s;
+  s = s.replace(/\((https?:\/\/[^\s)]+)\)/gi, '<a href="$1" target="_blank" rel="noopener">$1<\/a>');
+  s = s.replace(/\(([a-z0-9.-]+\.[a-z]{2,}[^)]*)\)/gi, '<a href="https://$1" target="_blank" rel="noopener">$1<\/a>');
+  return s;
+}
+
+function applyLinkDirectives(s){
+  if(!s) return s;
+  let changed = true;
+  const dirRe = /\(\s*make\s+the\s+["“]?([^"”]+)["”]?\s+a\s+hyperlink\s+(?:to|that\s+points\s+to)\s+(https?:\/\/[^\s)]+)\s*\)/i;
+  while(changed){
+    changed = false;
+    const m = s.match(dirRe);
+    if(!m) break;
+    const label = m[1];
+    const url = m[2];
+    s = s.replace(dirRe, '');
+    const esc = label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    const patterns = [
+      new RegExp('(\\b)'+esc+'(\\b)'),
+      new RegExp('["“]'+esc+'["”]')
+    ];
+    let replaced = false;
+    for (let k=0;k<patterns.length;k++) {
+      if(patterns[k].test(s)) { 
+        s = s.replace(patterns[k], function(m){ 
+          const text = m.replace(/^["“]|["”]$/g,'');
+          return '<a href="'+url+'" target="_blank" rel="noopener">'+text+'</a>';
+        }); 
+        replaced = true; 
+        break; 
+      }
+    }
+    if(!replaced){ s += ' <a href="'+url+'" target="_blank" rel="noopener">'+label+'</a>'; }
+    changed = true;
+  }
+  return s;
+}
+
+function boldPrefixBeforeColonPerLine(s){
+  if(!s) return s;
+  const lines = s.split('\n');
+  const out = lines.map(line => {
+    const m = line.match(/^(\s*(?:-|\u2013|•|\d+\.)\s*)([^:\n]{2,}?)(:)(\s*.*)$/);
+    if(m) { return m[1] + '<b>' + m[2] + m[3] + '</b>' + m[4]; }
+    return line;
+  });
+  return out.join('\n');
+}
+
+function formatAnswer(raw){
+  let t = raw || "";
+  t = stripOuterQuotes(t);
+  t = applyLinkDirectives(t);
+  t = linkifyBracketed(t);
+  t = boldPrefixBeforeColonPerLine(t);
+  t = t.replace(/\n\s*\n/g, "\n\n");
+  t = t.replace(/\n/g, "<br>");
+  return t;
+}
+
+let history = [];
+let current = null;
+
+function renderSlide(id){
+  current = id;
+  const slide = SLIDES[id];
+  const content = document.getElementById("content");
+  const card = document.getElementById("card");
+
+  if(!slide){ 
+    content.innerHTML = "<div style='text-align:left'>Slide not found: "+id+"</div>"; 
+    return; 
+  }
+
+  // reset classes each time
+  card.className = "card";
+
+  const dynamicSlides = ["C6","C2A","C2AA","PA3","PA1","C32","C331","C332","C42","C7521"];
+  if(dynamicSlides.includes(id)){
+    card.classList.add("dynamic");
+  }
+
+  if(slide.type === "q"){
+    card.classList.add("question");
+    const qtext = stripOuterQuotes(slide.text || "");
+    const btns = (slide.buttons||[]).map(
+      b=>`<button class="btn" onclick="goTo('${b.next}')">${b.label}</button>`
+    ).join("");
+    content.innerHTML = `<h1>${qtext}</h1><div class="btns">${btns}</div>`;
+  } else {
+    card.classList.add("answer");
+    const html = formatAnswer(slide.text || "");
+    content.innerHTML = `<div class="answer-text">${html}</div>`;
+  }
+}
+
+function goTo(id){ history.push(current); renderSlide(id); }
+function goBack(){ if(history.length){ renderSlide(history.pop()); } }
+function resetGuide(){ history=[]; renderSlide(startId); }
+
+const startId = "W1";
+renderSlide(startId);
+</script>
+</body>
+</html>
